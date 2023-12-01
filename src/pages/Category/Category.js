@@ -43,26 +43,28 @@ function Note({ id, categories, setCategories }) {
   const navigate = useNavigate();
   const handleDelete = (id) => {
     const filteredCat = categories.filter((cat) => cat.id !== id);
+    localStorage.removeItem(`${id}`);
     setCategories(filteredCat);
     localStorage.setItem("Category", JSON.stringify(filteredCat));
   };
   const handleNavigation = () => {
     navigate(`/${id}/0`);
   };
-  useEffect(() => {
-    console.log(categories);
-  }, []);
   return (
     <Box onClick={handleNavigation}>
       <Flex height="100%" justify="space-around">
-        <Text size={20}>{id}</Text>
+        <Text size={20} cursor="pointer">
+          {id}
+        </Text>
         <Btn
           onClick={(e) => {
             e.stopPropagation();
             handleDelete(id);
           }}
         >
-          <Text color="white">delete</Text>
+          <Text color="white" cursor="pointer">
+            delete
+          </Text>
         </Btn>
       </Flex>
     </Box>
@@ -168,20 +170,7 @@ const CatContainer = styled.div`
   width: 100%;
   height: 100%;
   padding: 10px 40px 10px 40px;
-`;
-
-const CatBox = styled.div`
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: inset -6px -4px 2px rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  border: 1.5px solid rgba(255, 255, 255, 0.326);
-  color: #fff;
-  paddding: 15px;
-  display: flex;
-  justify-content: space-between;
-  word-wrap: break-word;
-  width: 100%;
-  height: 14vh;
+  cursor: pointer;
 `;
 
 const Box = styled.div`
@@ -193,7 +182,7 @@ const Box = styled.div`
 `;
 
 const Btn = styled.div`
-  background-color: #2196f3;
+  background-color: #d11a2a;
   border-radius: 10px;
   color: #ccc;
   font-size: 13px;

@@ -35,9 +35,24 @@ function ListArea({ noteData }) {
       </Header>
       <Flex height="100%" justify="flex-start">
         {noteData.map((note, index) => {
-          return (
+          return params.id == index ? (
+            <TitleBox
+              style={{ backgroundColor: "#ccc" }}
+              onClick={() => handleBla(index)}
+            >
+              <Flex width="100%" height="100%">
+                <Text size={15} cursor="pointer">
+                  {note.title}
+                </Text>
+              </Flex>
+            </TitleBox>
+          ) : (
             <TitleBox onClick={() => handleBla(index)}>
-              <Text size={15}>{note.title}</Text>
+              <Flex width="100%" height="100%">
+                <Text size={15} cursor="pointer">
+                  {note.title}
+                </Text>
+              </Flex>
             </TitleBox>
           );
         })}
@@ -76,6 +91,14 @@ const TitleBox = styled.div`
   height: 40px;
   width: 100%;
   border-bottom: 1px solid #ccc;
+  cursor: pointer;
+`;
+
+const Circle = styled.div`
+  border-radius: 90px;
+  width: 30px;
+  height: 30px;
+  background: green;
 `;
 
 export default ListArea;

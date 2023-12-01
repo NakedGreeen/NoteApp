@@ -8,6 +8,7 @@ function ContentArea({}) {
   const navigate = useNavigate();
   const [noteData, setNoteData] = useState([]);
   const [done, setDone] = useState(0);
+  const [submit, setSubmit] = useState(false);
   const [text, setText] = useState({ title: "", content: "" });
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(`${params.Category}`));
@@ -17,10 +18,6 @@ function ContentArea({}) {
   }, []);
   useEffect(() => {
     localStorage.setItem(`${params.Category}`, JSON.stringify(noteData));
-    setDone(done + 1);
-    if (done > 1) {
-      navigate(`/${params.Category}/0`);
-    }
   }, [noteData]);
   const handleInput = (e) => {
     setText({ ...text, [e.target.name]: e.target.value });
@@ -28,7 +25,14 @@ function ContentArea({}) {
   const handleSubmit = (e) => {
     setNoteData((prevState) => [...prevState, text]);
     setText({ title: "", content: "" });
+    setSubmit(true);
   };
+  useEffect(() => {
+    if (text.title === "" && text.content === "" && submit == true) {
+      setSubmit(false);
+      navigate(`/${params.Category}/0`);
+    }
+  }, [text, submit]);
 
   return (
     <Wrapper>
@@ -46,7 +50,11 @@ function ContentArea({}) {
             value={text.title}
             onChange={handleInput}
           />
-          <WriteButton onClick={() => handleSubmit()}>작성 완료</WriteButton>
+          <WriteButton onClick={() => handleSubmit()}>
+            <Flex height="100%" width="100%" align="center" justify="center">
+              작성 완료
+            </Flex>
+          </WriteButton>
         </Flex>
       </Header>
       <Flex height="80%">
