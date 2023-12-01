@@ -31,7 +31,7 @@ function CreateNote({ categories, setCategories }) {
         onChange={handleText}
       ></CatNameInput>
       <Flex direction="row">
-        <Btn onClick={handleSave}>
+        <Btn style={{ backgroundColor: "#2196f3" }} onClick={handleSave}>
           <Text color="white">Save</Text>
         </Btn>
       </Flex>
